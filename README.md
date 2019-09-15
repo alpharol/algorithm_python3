@@ -42,7 +42,7 @@ python3.7
 
 <br/>
 
-![image](https://github.com/alpharol/algorithm_python3/blob/master/picture.jpg)
+![image](https://github.com/alpharol/algorithm_python3/tree/master/picture.jpg)
 
 本仓库代码分享给[女朋友Jasmine](https://github.com/shumengshi)
 
