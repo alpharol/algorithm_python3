@@ -8,29 +8,25 @@
 示例 1:输入: [2,2,1];输出: 1
 示例 2:输入: [4,1,2,1,2];输出: 4
 """
-
 # ************************************#
-# *************solution 3*************#
+# *************solution 4*************#
 # ************************************#
-###使用哈希表
-#执行用时 :204 ms, 在所有 Python3 提交中击败了8.46%的用户
+#使用异或运算的方法，时间复杂度是O(n)，没有使用额外空间
+#执行用时 :128 ms, 在所有 Python3 提交中击败了59.43%的用户
 #内存消耗 :16.2 MB, 在所有 Python3 提交中击败了5.03%的用户
-class Solution(object):
+class Solution:
     def singleNumber(self, nums):
-        hash_table = {}
-        for i in nums:
-            if i in hash_table:
-                hash_table.pop(i)
-            else:
-                hash_table[i] = 1
-        return hash_table.popitem()[0]   ###popitem表示随机返回并删除字典中的一对键值
-
+        a = 0
+        for x in nums:
+            a = a ^ x
+        return a
 
 if __name__ == "__main__":
     nums = [2,2,1]
     solution = Solution()
     result = solution.singleNumber(nums)
     print(result)
+
 
 
 # ************************************#
@@ -64,4 +60,23 @@ class Solution:
         num_set = list(set(nums))
         s = sum(num_set)
         return 2*s - sum(nums)
+"""
+
+
+# ************************************#
+# *************solution 3*************#
+# ************************************#
+###使用哈希表
+#执行用时 :204 ms, 在所有 Python3 提交中击败了8.46%的用户
+#内存消耗 :16.2 MB, 在所有 Python3 提交中击败了5.03%的用户
+"""
+class Solution(object):
+    def singleNumber(self, nums):
+        hash_table = {}
+        for i in nums:
+            if i in hash_table:
+                hash_table.pop(i)
+            else:
+                hash_table[i] = 1
+        return hash_table.popitem()[0]   ###popitem表示随机返回并删除字典中的一对键值
 """
