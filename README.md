@@ -39,10 +39,3 @@ python3.7
 1. 题目的链接
 2. 题目的描述
 3. 题目的解答和思路
-
-<br/>
-
-![image](https://github.com/alpharol/algorithm_python3/raw/master/picture.jpg)
-
-本仓库代码分享给[女朋友Jasmine](https://github.com/shumengshi)
-
