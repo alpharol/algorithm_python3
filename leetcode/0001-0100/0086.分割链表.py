@@ -1,14 +1,15 @@
-#https://leetcode-cn.com/problems/merge-two-sorted-lists/
+# https://leetcode-cn.com/problems/partition-list/
 
 """
-将两个有序链表合并为一个新的有序链表并返回。新链表是通过拼接给定的两个链表的所有节点组成的。 
-示例：
-输入：1->2->4, 1->3->4
-输出：1->1->2->3->4->4
+给定一个链表和一个特定值 x，对链表进行分隔，使得所有小于 x 的节点都在大于或等于 x 的节点之前。
+你应当保留两个分区中每个节点的初始相对位置。
+
+示例:
+输入: head = 1->4->3->2->5->2, x = 3
+输出: 1->2->2->4->3->5
 """
 
 
-# Definition for singly-linked list.
 class ListNode:
     def __init__(self, x):
         self.val = x
@@ -34,7 +35,7 @@ class ListNode_handle:
                 tmp = tmp.next
             return root
 
-    def print_linked(self,root: ListNode):
+    def print_linked(self, root: ListNode):
         """
         打印链表
         :param root: 头结点
@@ -48,7 +49,7 @@ class ListNode_handle:
         value.append(str(tmp.val))
         print("->".join(value))
 
-    def length(self,root):
+    def length(self, root):
         """
         计算链表的长度
         :param root:
@@ -63,7 +64,7 @@ class ListNode_handle:
         root_length = root_length + 1
         return root_length
 
-    def insert_link(self,root, num, position):
+    def insert_link(self, root, num, position):
         """
         向链表插入数据
         :param root: 头结点
@@ -90,7 +91,7 @@ class ListNode_handle:
             tmp.next = insert_node
         return root
 
-    def delete_link(self,root, position):
+    def delete_link(self, root, position):
         """
         删除链表中的元素
         :param root: 头结点
@@ -113,53 +114,32 @@ class ListNode_handle:
             return root
 
 
-
-#执行用时 :56 ms, 在所有 Python3 提交中击败了77.70%的用户
-#内存消耗 :13.7 MB, 在所有 Python3 提交中击败了5.66%的用户
-
-#************************************************************#
-#**********************真正的题目在这里*************************#
-#************************************************************#
 class Solution:
-    def mergeTwoLists(self, l1:ListNode, l2:ListNode):
-        dummy = ListNode(0)
-        tmp = dummy
-        p1 = l1
-        p2 = l2
-        while p1 != None and p2 != None:
-            if p1.val <= p2.val:
-                tmp.next = p1
-                tmp = p1
-                p1 = p1.next
+    def partition(self, head: ListNode, x: int) -> ListNode:
+        left = ListNode(0)
+        tmp_1 = left
+        right = ListNode(0)
+        tmp_2 = right
+        p = head
+        while p != None:
+            if p.val < x:
+                tmp_1.next = p
+                tmp_1 = tmp_1.next
+                p = p.next
             else:
-                tmp.next = p2
-                tmp = p2
-                p2 = p2.next
-        if p1 == None:
-            while p2 != None:
-                tmp.next = p2
-                tmp = tmp.next
-                p2 = p2.next
-        else:
-            while p1 != None:
-                tmp.next = p1
-                tmp = tmp.next
-                p1 = p1.next
-        return dummy.next
-
+                tmp_2.next = p
+                tmp_2 = tmp_2.next
+                p = p.next
+        tmp_2.next = None
+        tmp_1.next = right.next
+        return left.next
 
 
 if __name__ == "__main__":
-    nums1 = [1,3,5,7,9,14,19,20]
-    nums2 = [2,4,6,8,10,11]
+    nums = [1, 4, 3, 2, 5, 2]
     handle = ListNode_handle()
-    a1 = handle.Creatlist(nums1)
-    a2 = handle.Creatlist(nums2)
-    print("--------print ListNode1----------")
-    handle.print_linked(a1)
-    print("--------print ListNode2----------")
-    handle.print_linked(a2)
+    a = handle.Creatlist(nums)
+    handle.print_linked(a)
     solution = Solution()
-    a3 = solution.mergeTwoLists(a1,a2)
-    print("--------print merged ListNode----------")
-    handle.print_linked(a3)
+    result = solution.partition(a,3)
+    handle.print_linked(result)

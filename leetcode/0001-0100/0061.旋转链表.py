@@ -1,14 +1,25 @@
-#https://leetcode-cn.com/problems/merge-two-sorted-lists/
+# https://leetcode-cn.com/problems/rotate-list/
 
 """
-将两个有序链表合并为一个新的有序链表并返回。新链表是通过拼接给定的两个链表的所有节点组成的。 
-示例：
-输入：1->2->4, 1->3->4
-输出：1->1->2->3->4->4
+给定一个链表，旋转链表，将链表每个节点向右移动 k 个位置，其中 k 是非负数。
+示例 1:
+输入: 1->2->3->4->5->NULL, k = 2
+输出: 4->5->1->2->3->NULL
+解释:
+向右旋转 1 步: 5->1->2->3->4->NULL
+向右旋转 2 步: 4->5->1->2->3->NULL
+
+示例 2:
+输入: 0->1->2->NULL, k = 4
+输出: 2->0->1->NULL
+解释:
+向右旋转 1 步: 2->0->1->NULL
+向右旋转 2 步: 1->2->0->NULL
+向右旋转 3 步: 0->1->2->NULL
+向右旋转 4 步: 2->0->1->NULL
 """
 
 
-# Definition for singly-linked list.
 class ListNode:
     def __init__(self, x):
         self.val = x
@@ -34,7 +45,7 @@ class ListNode_handle:
                 tmp = tmp.next
             return root
 
-    def print_linked(self,root: ListNode):
+    def print_linked(self, root: ListNode):
         """
         打印链表
         :param root: 头结点
@@ -48,7 +59,7 @@ class ListNode_handle:
         value.append(str(tmp.val))
         print("->".join(value))
 
-    def length(self,root):
+    def length(self, root):
         """
         计算链表的长度
         :param root:
@@ -63,7 +74,7 @@ class ListNode_handle:
         root_length = root_length + 1
         return root_length
 
-    def insert_link(self,root, num, position):
+    def insert_link(self, root, num, position):
         """
         向链表插入数据
         :param root: 头结点
@@ -90,7 +101,7 @@ class ListNode_handle:
             tmp.next = insert_node
         return root
 
-    def delete_link(self,root, position):
+    def delete_link(self, root, position):
         """
         删除链表中的元素
         :param root: 头结点
@@ -113,53 +124,41 @@ class ListNode_handle:
             return root
 
 
-
-#执行用时 :56 ms, 在所有 Python3 提交中击败了77.70%的用户
-#内存消耗 :13.7 MB, 在所有 Python3 提交中击败了5.66%的用户
-
-#************************************************************#
-#**********************真正的题目在这里*************************#
-#************************************************************#
+# *****************************************************#
+# ******************真正的题目在这里*********************#
+# *****************************************************#
+# 执行用时 : 44 ms, 在所有 python3 提交中击败了88.77%的用户
+# 内存消耗 : 13.7 MB, 在所有 python3 提交中击败了5.40%的用户
 class Solution:
-    def mergeTwoLists(self, l1:ListNode, l2:ListNode):
-        dummy = ListNode(0)
-        tmp = dummy
-        p1 = l1
-        p2 = l2
-        while p1 != None and p2 != None:
-            if p1.val <= p2.val:
-                tmp.next = p1
-                tmp = p1
-                p1 = p1.next
-            else:
-                tmp.next = p2
-                tmp = p2
-                p2 = p2.next
-        if p1 == None:
-            while p2 != None:
-                tmp.next = p2
-                tmp = tmp.next
-                p2 = p2.next
+    def rotateRight(self, head: ListNode, k: int) -> ListNode:
+        if head == None:
+            return head
+        p = head
+        count = 1
+        while p.next != None:
+            p = p.next
+            count = count + 1
+        k_val = k % count
+        if k_val == 0:
+            return head
         else:
-            while p1 != None:
-                tmp.next = p1
-                tmp = tmp.next
-                p1 = p1.next
-        return dummy.next
-
+            tail = head
+            for i in range(count - k_val - 1):
+                tail = tail.next
+            new_head = tail.next  # 找到新的链表的起始节点
+            tail.next = None  # 找到新链表的末尾节点
+            tmp = new_head
+            while new_head.next != None:
+                new_head = new_head.next
+            new_head.next = head
+            return tmp
 
 
 if __name__ == "__main__":
-    nums1 = [1,3,5,7,9,14,19,20]
-    nums2 = [2,4,6,8,10,11]
+    nums = [1, 2, 3, 4, 5]
     handle = ListNode_handle()
-    a1 = handle.Creatlist(nums1)
-    a2 = handle.Creatlist(nums2)
-    print("--------print ListNode1----------")
-    handle.print_linked(a1)
-    print("--------print ListNode2----------")
-    handle.print_linked(a2)
+    a = handle.Creatlist(nums)
+    handle.print_linked(a)
     solution = Solution()
-    a3 = solution.mergeTwoLists(a1,a2)
-    print("--------print merged ListNode----------")
-    handle.print_linked(a3)
+    result = solution.rotateRight(a, 2)
+    handle.print_linked(result)

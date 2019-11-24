@@ -1,14 +1,14 @@
-#https://leetcode-cn.com/problems/merge-two-sorted-lists/
+# https://leetcode-cn.com/problems/reverse-linked-list-ii/
 
 """
-将两个有序链表合并为一个新的有序链表并返回。新链表是通过拼接给定的两个链表的所有节点组成的。 
-示例：
-输入：1->2->4, 1->3->4
-输出：1->1->2->3->4->4
+反转从位置 m 到 n 的链表。请使用一趟扫描完成反转。
+说明:1 ≤ m ≤ n ≤ 链表长度。
+示例:
+输入: 1->2->3->4->5->NULL, m = 2, n = 4
+输出: 1->4->3->2->5->NULL
 """
 
 
-# Definition for singly-linked list.
 class ListNode:
     def __init__(self, x):
         self.val = x
@@ -34,7 +34,7 @@ class ListNode_handle:
                 tmp = tmp.next
             return root
 
-    def print_linked(self,root: ListNode):
+    def print_linked(self, root: ListNode):
         """
         打印链表
         :param root: 头结点
@@ -48,7 +48,7 @@ class ListNode_handle:
         value.append(str(tmp.val))
         print("->".join(value))
 
-    def length(self,root):
+    def length(self, root):
         """
         计算链表的长度
         :param root:
@@ -63,7 +63,7 @@ class ListNode_handle:
         root_length = root_length + 1
         return root_length
 
-    def insert_link(self,root, num, position):
+    def insert_link(self, root, num, position):
         """
         向链表插入数据
         :param root: 头结点
@@ -90,7 +90,7 @@ class ListNode_handle:
             tmp.next = insert_node
         return root
 
-    def delete_link(self,root, position):
+    def delete_link(self, root, position):
         """
         删除链表中的元素
         :param root: 头结点
@@ -113,53 +113,39 @@ class ListNode_handle:
             return root
 
 
-
-#执行用时 :56 ms, 在所有 Python3 提交中击败了77.70%的用户
-#内存消耗 :13.7 MB, 在所有 Python3 提交中击败了5.66%的用户
-
-#************************************************************#
-#**********************真正的题目在这里*************************#
-#************************************************************#
+# *****************************************************#
+# ******************真正的题目在这里*********************#
+# *****************************************************#
+# 执行用时 :52 ms, 在所有 python3 提交中击败了32.72%的用户
+# 内存消耗 :13.6 MB, 在所有 python3 提交中击败了5.24%的用户
 class Solution:
-    def mergeTwoLists(self, l1:ListNode, l2:ListNode):
-        dummy = ListNode(0)
-        tmp = dummy
-        p1 = l1
-        p2 = l2
-        while p1 != None and p2 != None:
-            if p1.val <= p2.val:
-                tmp.next = p1
-                tmp = p1
-                p1 = p1.next
-            else:
-                tmp.next = p2
-                tmp = p2
-                p2 = p2.next
-        if p1 == None:
-            while p2 != None:
-                tmp.next = p2
-                tmp = tmp.next
-                p2 = p2.next
-        else:
-            while p1 != None:
-                tmp.next = p1
-                tmp = tmp.next
-                p1 = p1.next
+    def reverseBetween(self, head: ListNode, m: int, n: int) -> ListNode:
+        dummy = ListNode(-1)
+        dummy.next = head
+        p = dummy
+        i = 0
+        stack = []
+        while i < m - 1:
+            p = p.next
+            i = i + 1
+        left = p
+        while i >= m - 1 and i < n:
+            stack.append(p.next)
+            p = p.next
+            i = i + 1
+        right = p.next
+        while stack != []:
+            left.next = stack.pop()
+            left = left.next
+        left.next = right
         return dummy.next
 
 
-
 if __name__ == "__main__":
-    nums1 = [1,3,5,7,9,14,19,20]
-    nums2 = [2,4,6,8,10,11]
+    num = [1, 2, 3, 4, 5]
     handle = ListNode_handle()
-    a1 = handle.Creatlist(nums1)
-    a2 = handle.Creatlist(nums2)
-    print("--------print ListNode1----------")
-    handle.print_linked(a1)
-    print("--------print ListNode2----------")
-    handle.print_linked(a2)
+    a = handle.Creatlist(num)
+    handle.print_linked(a)
     solution = Solution()
-    a3 = solution.mergeTwoLists(a1,a2)
-    print("--------print merged ListNode----------")
-    handle.print_linked(a3)
+    b = solution.reverseBetween(a, 2, 4)
+    handle.print_linked(b)
