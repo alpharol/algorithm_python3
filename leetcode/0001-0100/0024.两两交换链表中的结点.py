@@ -141,14 +141,6 @@ class Solution:
 
 if __name__ == "__main__":
     nums = [1, 2, 3, 4]
-
-
-
-
-
-
-
-
     handle = ListNode_handle()
     a = handle.Creatlist(nums)
     handle.print_linked(a)
